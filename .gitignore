@@ -1,0 +1,3 @@
+# Ignore these files:
+*.py[co]
+.DS_Store
