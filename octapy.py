@@ -1,41 +1,69 @@
 #!/usr/bin/env python2.7
 
-from optparse import OptionParser
+import argparse
 from components import *
+
+def buildScale(args):
+    ''' generate and output a scale '''
+   
+    # check if an accidental is present
+    if len(args.tonic) == 2:
+        accidental = args.tonic[1] 
+    else:
+        accidental = False
+
+    # create tonic and scale
+    tonic = note.new(args.tonic[0], accidental)
+    s = scale.new(tonic, args.mode)
+
+    # build and print message
+    message = ''
+    for i, n in enumerate(s.getScale()):
+        if i == 0:
+            message = n.render()
+        else:
+            message = message + ' - ' + n.render() 
+
+    print message
+
+
+def buildChord(args):
+    ''' TODO '''
+    return args
 
 
 def main():
-    parser = OptionParser()
-
-    # General options
-    parser.add_option(
-        '-m', '--mode', 
-        action="store", type="string", dest="mode", default="ionian",
-        help="Specify a scale name, defaults to ionian"
-    )
-    parser.add_option(
-        '-t', '--tonic', 
-        action="store", type="string", dest="tonic", default="C",
-        help="Set the tonic, defaults to C"
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(
+        title = 'Commands',
+        description = 'Valid subcommands',
+        help = 'Output options'
     )
 
-    # output options
-    parser.add_option(
-        '-s', '--scale',
-        action="store_true", dest="output_scale", default=False,
-        help="Outputs scale when set"
+    # scales
+    scaleParser = subparsers.add_parser('build-scale')
+    scaleParser.add_argument(
+        '-m', '--mode',
+        action = 'store', dest = 'mode', default = 'ionian',
+        help = 'Specify a scale name, defaults to ionian'
     )
+    scaleParser.add_argument(
+        '-t', '--tonic',
+        action = 'store', dest = 'tonic', default = 'C',
+        help = 'Set the tonic, defaults to C'
+    )
+    scaleParser.set_defaults(func=buildScale)
+
+    # chords
+    chordParser = subparsers.add_parser('build-chord')
+    chordParser.set_defaults(func=buildChord)
 
     # parse options
-    (options, args) = parser.parse_args()
-
-    # handle arguments
-    if options.output_scale:
-        s = scale.new(options.tonic, options.mode)
-        print s.getScale()
+    args = parser.parse_args()
+    args.func(args)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
 
     
