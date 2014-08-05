@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class Chord:
     ''' Build a chord by passing a mode with chord position or chord name '''
 

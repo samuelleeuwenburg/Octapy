@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class Note:
 
     def __init__(self, name = 'C', accidental = False):
@@ -73,7 +75,10 @@ class Note:
 
     def render(self):
         if self.accidental:
-            return self.name + self.accidental
+            accidental = self.accidental.replace('#', '♯')
+            accidental = accidental.replace('b', '♭')
+            accidental = accidental.replace('x', '𝄪')
+            return self.name + accidental
         else:
             return self.name
 
