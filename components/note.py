@@ -51,6 +51,15 @@ class Note:
 
                 elif self.accidental == 'bb':
                     self.accidental = 'b'
+                    
+            # if the jump is whole and a half
+            if steps == 1.5:
+                if self.accidental == 'bb':
+                    self.accidental = False
+                if self.accidental == 'b':
+                    self.accidental = '#' 
+                elif self.accidental == False:
+                    self.accidental = 'x'
 
         # if next item is a wholestep away
         if next_steps == 1.0:
@@ -67,7 +76,17 @@ class Note:
 
                 elif self.accidental == 'b':
                     self.accidental = 'bb' 
-
+                    
+            # if the jump is whole and a half
+            if steps == 1.5:
+                if self.accidental == 'bb':
+                    self.accidental = 'b'
+                if self.accidental == 'b':
+                    self.accidental = False
+                elif self.accidental == False:
+                    self.accidental = '#'
+                elif self.accidental == '#':
+                    self.accidental = 'x'
                 
         # jump 
         self.name = self.note_order[1]
@@ -92,7 +111,6 @@ class Note:
 
     def naturalize(self):
         self.accidental = False
-
 
 
 def new(name = 'C', accidental = False):

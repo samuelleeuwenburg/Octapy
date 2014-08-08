@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 
+import note
+import scale 
+
 class Chord:
     ''' Build a chord by passing a mode with chord position or chord name '''
 
     def __init__(self, root, name):
         self.root = root
-        self.notes = calculateChordNotes(name)
+        self.notes = self.buildChord(name)
 
     def getChord(self):
         ''' Return chord notes as an array '''
@@ -14,16 +17,28 @@ class Chord:
     def getRoot(self):
         return root
         
-    def calculateChordNotes(self, name):
-        chords = {
-            'maj': [0, 4, 7],
-            'maj7': [0, 4, 7, 11],
-            'm': [0, 3, 7],
-            'm7': [0, 3, 7, 10]
-        }
+    def buildChord(self, name):
+        f = open('./patterns/chords.json')
+        chords = json.loads(f.read())
+        f.close()
 
-    def calculateChordByScale(self, scale):
-        return scale
+        # build matching scale
+        chordScale = scale.new(
+            self.root, 
+            chords[name]['scale'],
+            chords[name]['degree']
+        )
 
-def new():
-    return Chord() 
+        chord = []
+
+        for pos in chords[name]['degrees']:
+            
+            chord.append(chordScale.scale[pos - 1])
+
+        return chord 
+
+
+def new(root, name):
+    return Chord(root, name) 
+
+
