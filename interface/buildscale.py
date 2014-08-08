@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import argparse
 from components import *
 
 def build(args):

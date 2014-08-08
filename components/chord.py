@@ -2,6 +2,7 @@
 
 import note
 import scale 
+import json 
 
 class Chord:
     ''' Build a chord by passing a mode with chord position or chord name '''

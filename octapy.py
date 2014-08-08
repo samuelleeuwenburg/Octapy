@@ -15,7 +15,7 @@ def main():
     )
 
     buildscale.setup(subparsers)
-    buildscale.setup(subparsers)
+    buildchord.setup(subparsers)
 
     # parse options
     args = parser.parse_args()

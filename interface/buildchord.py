@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from components import *
+
 def build(args):
     ''' generate and output a chord ''' 
 
@@ -24,7 +26,6 @@ def build(args):
     print message
 
 def setup(subparsers):
-    # chords
 
     chordParser = subparsers.add_parser('chord')
     chordParser.add_argument(
