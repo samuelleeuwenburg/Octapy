@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-
 
+import output
+
 class Note:
 
     def __init__(self, name = 'C', accidental = False):
         self.name = name
         self.accidental = accidental
+
+        if accidental != '#' and accidental != 'b' and accidental != 'x' and accidental != 'bb' and accidental != False:
+            print 'error: ' + str(accidental) + ' is not a valid accidental'
+            self.accidental = False
 
         self.note_values = {
             'C': 0.5,
@@ -16,6 +22,12 @@ class Note:
             'B': 1.0
         }
         self.note_order = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
+
+        try:
+            self.note_values[self.name]
+        except KeyError, e:
+            output.warning(self.name + ' is not a valid note, will use C instead')
+            self.name = 'C'
 
         self.step_value = self.note_values[self.name]
 
@@ -115,3 +127,4 @@ class Note:
 
 def new(name = 'C', accidental = False):
     return Note(name, accidental)
+

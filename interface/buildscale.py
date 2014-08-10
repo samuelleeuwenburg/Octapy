@@ -4,30 +4,24 @@ from components import *
 
 def build(args):
     # check if an accidental is present
-    if len(args.tonic) == 2:
-        accidental = args.tonic[1] 
+    if len(args.tonic) > 1:
+        accidental = args.tonic[1:len(args.tonic)] 
     else:
         accidental = False
 
     # create tonic and scale
-    tonic = note.new(args.tonic[0], accidental)
+    tonic = note.new(args.tonic[0].upper(), accidental)
     degree = args.degree
     s = scale.new(tonic, args.name, args.degree)
 
-    # build and print message
-    message = ''
-    for i, n in enumerate(s.getScale()):
-        if i == 0:
-            message = n.render()
-        else:
-            message = message + ' - ' + n.render() 
-
-    print message
+    # render and print 
+    print s.render()
 
 
 def setup(subparsers):
 
     scaleParser = subparsers.add_parser('scale')
+
     scaleParser.add_argument(
         '-n', '--name',
         action = 'store', dest = 'name', default = 'major',
@@ -40,7 +34,9 @@ def setup(subparsers):
     )
     scaleParser.add_argument(
         '-d', '--degree',
-        action = 'store', dest = 'degree', default = 1,
+        action = 'store', dest = 'degree', default = '1',
         help = 'Set the to start the scale on, defaults to the first'
     )
+
     scaleParser.set_defaults(func=build)
+

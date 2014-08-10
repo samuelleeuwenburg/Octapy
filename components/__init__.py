@@ -1,1 +1,1 @@
-__all__ = ['note', 'scale', 'chord']
+__all__ = ['output', 'note', 'scale', 'chord']
